@@ -1,7 +1,15 @@
 venv/
 __pycache__/
 *.pyc
-*.h5
 *.pkl
+*.keras
+*.h5
 asl_alphabet_train/
+hand_landmarker.task
+twi_output.mp3
+test.mp3
+word_sign_data/
+preprocessed_data.pkl
+training_results.png
+word_training_results.png
 .env
