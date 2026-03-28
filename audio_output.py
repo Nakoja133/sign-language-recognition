@@ -4,12 +4,12 @@ from gtts import gTTS
 
 TWI_PHONETIC = {
         # Individual letter pronunciations
-    'ei': 'ay', 'bi': 'bee', 'si': 'see',
+    'ei': 'ar', 'bh': 'bh', 'ch': 'see',
     'di': 'dee', 'ii': 'ee', 'ef': 'eff',
     'ji': 'jee', 'eich': 'aitch', 'ai': 'eye',
     'jei': 'jay', 'kei': 'kay', 'el': 'ell',
-    'em': 'emm', 'en': 'enn', 'oh': 'oh',
-    'pi': 'pee', 'kyu': 'cue', 'aa': 'arr',
+    'em': 'mm', 'en': 'enn', 'oh': 'oh',
+    'pi': 'ph', 'kyu': 'cue', 'aa': 'arr',
     'es': 'ess', 'ti': 'tee', 'yu': 'you',
     'vi': 'vee', 'dubilyu': 'double-you',
     'eks': 'ex', 'wai': 'why', 'zi': 'zee',
