@@ -1,10 +1,7 @@
 import os
 import tempfile
-import time
 from gtts import gTTS
 
-# Twi pronunciation guide for gTTS
-# gTTS can't speak Twi but we can phonetically guide it
 TWI_PHONETIC = {
     "agoo": "ah-goo",
     "nante yie": "nan-teh yee-eh",
@@ -18,7 +15,6 @@ TWI_PHONETIC = {
     "aane": "aa-neh",
     "daabi": "daa-bee",
     "boa me": "boh-ah meh",
-    "din": "deen",
     "adamfo": "ah-dam-fo",
     "abusua": "ah-boo-soo-ah",
     "maame": "maa-meh",
@@ -36,32 +32,42 @@ TWI_PHONETIC = {
     "nkran": "n-kran",
     "yoo": "yoh",
     "awerchow": "ah-wer-chow",
+    "din": "deen",
+    "odo": "oh-doh",
 }
 
-def speak_twi(twi_text):
-    """Speak Twi text using phonetic pronunciation"""
+def generate_audio_bytes(twi_text):
+    """Generate audio and return as bytes for st.audio()"""
     try:
-        # Get phonetic version if available
         phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
-
         with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
             tmp_path = f.name
-
-        # Use slow=True for clearer pronunciation
         tts = gTTS(text=phonetic, lang='en', slow=True)
         tts.save(tmp_path)
+        with open(tmp_path, 'rb') as f:
+            audio_bytes = f.read()
+        os.unlink(tmp_path)
+        return audio_bytes
+    except Exception as e:
+        print(f"Audio error: {e}")
+        return None
 
-        # Play using Windows
+def speak_twi(twi_text):
+    """For local use — plays audio via Windows"""
+    try:
+        phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
+            tmp_path = f.name
+        tts = gTTS(text=phonetic, lang='en', slow=True)
+        tts.save(tmp_path)
         os.startfile(tmp_path)
-        time.sleep(3)
         return True
-
     except Exception as e:
         print(f"Audio error: {e}")
         return False
 
 def save_audio_file(twi_text, output_path="twi_output.mp3"):
-    """Save Twi audio as downloadable file"""
+    """Save audio as file"""
     try:
         phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
         tts = gTTS(text=phonetic, lang='en', slow=True)
@@ -70,15 +76,3 @@ def save_audio_file(twi_text, output_path="twi_output.mp3"):
     except Exception as e:
         print(f"Save error: {e}")
         return None
-
-def test_audio():
-    print("Testing Twi audio...")
-    words = ["agoo", "medaase", "akwaaba", "nsuo", "aduane"]
-    for word in words:
-        print(f"Speaking: {word}")
-        speak_twi(word)
-        time.sleep(1)
-    print("Test complete! ✅")
-
-if __name__ == "__main__":
-    test_audio()
