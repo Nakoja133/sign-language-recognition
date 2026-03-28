@@ -142,7 +142,7 @@ TWI_DICTIONARY = {
 
 # Twi names for individual letters
 TWI_LETTERS = {
-    'A': 'ei', 'B': 'bi', 'C': 'si', 'D': 'di',
+    'A': 'ar', 'B': 'bh', 'C': 'si', 'D': 'di',
     'E': 'ii', 'F': 'ef', 'G': 'ji', 'H': 'eich',
     'I': 'ai', 'J': 'jei', 'K': 'kei', 'L': 'el',
     'M': 'em', 'N': 'en', 'O': 'oh', 'P': 'pi',
