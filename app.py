@@ -10,6 +10,14 @@ import time
 import tempfile
 import os
 from gtts import gTTS
+import urllib.request
+
+# Auto-download hand landmarker model if not present
+if not os.path.exists("hand_landmarker.task"):
+    urllib.request.urlretrieve(
+        "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+        "hand_landmarker.task"
+    )
 
 # ── Page config ───────────────────────────────────────────────
 st.set_page_config(
