@@ -140,13 +140,47 @@ TWI_DICTIONARY = {
     "yellow": "akokɔsrade",
 }
 
+# Twi names for individual letters
+TWI_LETTERS = {
+    'A': 'ei', 'B': 'bi', 'C': 'si', 'D': 'di',
+    'E': 'ii', 'F': 'ef', 'G': 'ji', 'H': 'eich',
+    'I': 'ai', 'J': 'jei', 'K': 'kei', 'L': 'el',
+    'M': 'em', 'N': 'en', 'O': 'oh', 'P': 'pi',
+    'Q': 'kyu', 'R': 'aa', 'S': 'es', 'T': 'ti',
+    'U': 'yu', 'V': 'vi', 'W': 'dubilyu', 'X': 'eks',
+    'Y': 'wai', 'Z': 'zi'
+}
+
 def get_twi_translation(text):
     """Get Twi translation for any text"""
     if not text:
         return text, ""
 
+    # Single letter — use Twi letter name
+    if len(text) == 1 and text.upper() in TWI_LETTERS:
+        return text, TWI_LETTERS[text.upper()]
+
     # Clean and lowercase
     clean = text.lower().strip().replace(" ", "")
+
+    # Check dictionary first
+    if clean in TWI_DICTIONARY:
+        return text, TWI_DICTIONARY[clean]
+
+    # Try with spaces
+    spaced = text.lower().strip()
+    if spaced in TWI_DICTIONARY:
+        return text, TWI_DICTIONARY[spaced]
+
+    # Try Google Translate as fallback
+    try:
+        result = translator.translate(text, src='en', dest='ak')
+        if result and result.text:
+            return text, result.text
+    except Exception as e:
+        print(f"Translation error: {e}")
+
+    return text, text
 
     # Check dictionary first (fastest and most accurate)
     if clean in TWI_DICTIONARY:
