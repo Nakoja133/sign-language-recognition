@@ -2,7 +2,6 @@ venv/
 __pycache__/
 *.pyc
 *.pkl
-*.keras
 *.h5
 asl_alphabet_train/
 hand_landmarker.task
