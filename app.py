@@ -556,6 +556,85 @@ audio {
     50%       { box-shadow: 0 0 0 8px rgba(255,184,0,0); }
 }
 .pulse { animation: pulse 2s infinite; }
+            
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+
+    .block-container { padding: 0 !important; }
+    .app-wrapper { padding: 0 1rem 2rem !important; }
+
+    /* Hero */
+    .hero-section {
+        flex-direction: column !important;
+        padding: 1.5rem 0 1rem !important;
+        gap: 1rem !important;
+    }
+    .hero-title { font-size: 2.5rem !important; }
+    .hero-desc  { font-size: 0.85rem !important; max-width: 100% !important; }
+
+    /* Stats — horizontal scroll */
+    .hero-right {
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        padding-bottom: 0.5rem !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+    .stat-pill {
+        min-width: 130px !important;
+        padding: 0.6rem 0.8rem !important;
+    }
+    .stat-val  { font-size: 0.9rem !important; }
+
+    /* Settings strip */
+    .settings-strip {
+        flex-direction: column !important;
+        gap: 0.8rem !important;
+    }
+
+    /* Translation grid — stack vertically */
+    .translation-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Trans boxes */
+    .trans-text { font-size: 1.1rem !important; }
+
+    /* Tabs */
+    .stTabs [data-baseweb="tab"] {
+        padding: 0.5rem 0.8rem !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* Live sign letter */
+    .live-sign-letter { font-size: 2.2rem !important; }
+
+    /* Cards */
+    .gcard { padding: 1rem !important; border-radius: 12px !important; }
+    .card-value { font-size: 1.3rem !important; }
+
+    /* Sentence display */
+    .sentence-en  { font-size: 0.95rem !important; }
+    .sentence-twi { font-size: 1.1rem !important; }
+
+    /* How to use grid */
+    .gcard [style*="grid-template-columns: 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Kente bar */
+    .kente-bar { height: 4px !important; }
+
+    /* Footer */
+    .footer { font-size: 0.75rem !important; padding: 1rem 0 !important; }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 400px) {
+    .hero-title  { font-size: 2rem !important; }
+    .hero-eyebrow { font-size: 0.6rem !important; }
+    .stat-pill   { min-width: 110px !important; }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -894,7 +973,7 @@ with tab2:
     </div>
     """, unsafe_allow_html=True)
 
-    cam_col, res_col = st.columns([3, 2])
+    cam_col, res_col = st.columns([1, 1])
 
     with cam_col:
         run  = st.toggle("▶️  Start Camera", value=False)
