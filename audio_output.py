@@ -1,89 +1,75 @@
 import os
 import tempfile
 from gtts import gTTS
+from translator import twi_to_phonetic
 
-TWI_PHONETIC = {
-    # Individual letter pronunciations
-'ei': 'ay', 'bi': 'bee', 'si': 'see',
-'di': 'dee', 'ii': 'ee', 'ef': 'eff',
-'ji': 'jee', 'eich': 'aitch', 'ai': 'eye',
-'jei': 'jay', 'kei': 'kay', 'el': 'ell',
-'em': 'emm', 'en': 'enn', 'oh': 'oh',
-'pi': 'pee', 'kyu': 'cue', 'aa': 'arr',
-'es': 'ess', 'ti': 'tee', 'yu': 'you',
-'vi': 'vee', 'dubilyu': 'double-you',
-'eks': 'ex', 'wai': 'why', 'zi': 'zee',
 
-    "agoo": "ah-goo",
-    "nante yie": "nan-teh yee-eh",
-    "maakye": "maa-cheh",
-    "maaha": "maa-hah",
-    "maadwo": "maa-jo",
-    "akwaaba": "ah-kwaa-bah",
-    "medaase": "meh-daa-seh",
-    "mepawokyew": "meh-pah-wo-chew",
-    "kafra": "kah-frah",
-    "aane": "aa-neh",
-    "daabi": "daa-bee",
-    "boa me": "boh-ah meh",
-    "adamfo": "ah-dam-fo",
-    "abusua": "ah-boo-soo-ah",
-    "maame": "maa-meh",
-    "agya": "ah-jah",
-    "aduane": "ah-joo-ah-neh",
-    "nsuo": "n-soo-oh",
-    "odo": "oh-doh",
-    "anigye": "ah-nee-jeh",
-    "papa": "pah-pah",
-    "bone": "boh-neh",
-    "fie": "fee-eh",
-    "sukuu": "soo-koo",
-    "adwuma": "ah-joo-mah",
-    "ghana": "gah-nah",
-    "nkran": "n-kran",
-    "yoo": "yoh",
-    "awerchow": "ah-wer-chow",
-    "din": "deen",
-    "odo": "oh-doh",
-}
-
-def generate_audio_bytes(twi_text):
-    """Generate audio and return as bytes for st.audio()"""
+def make_audio_bytes(text):
+    """Generate audio bytes using Twi phonetic conversion"""
     try:
-        phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
-            tmp_path = f.name
+        phonetic = twi_to_phonetic(text)
         tts = gTTS(text=phonetic, lang='en', slow=True)
-        tts.save(tmp_path)
-        with open(tmp_path, 'rb') as f:
-            audio_bytes = f.read()
-        os.unlink(tmp_path)
-        return audio_bytes
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
+            tmp = f.name
+        tts.save(tmp)
+        with open(tmp, 'rb') as f:
+            data = f.read()
+        os.unlink(tmp)
+        return data
     except Exception as e:
         print(f"Audio error: {e}")
         return None
 
-def speak_twi(twi_text):
-    """For local use — plays audio via Windows"""
+
+def speak_twi(text):
+    """Speak Twi text using phonetic conversion — for local use"""
     try:
-        phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
-            tmp_path = f.name
+        phonetic = twi_to_phonetic(text)
         tts = gTTS(text=phonetic, lang='en', slow=True)
-        tts.save(tmp_path)
-        os.startfile(tmp_path)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as f:
+            tmp = f.name
+        tts.save(tmp)
+        os.startfile(tmp)
         return True
     except Exception as e:
         print(f"Audio error: {e}")
         return False
 
-def save_audio_file(twi_text, output_path="twi_output.mp3"):
-    """Save audio as file"""
+
+def save_audio_file(text, output_path="twi_output.mp3"):
+    """Save Twi speech as audio file"""
     try:
-        phonetic = TWI_PHONETIC.get(twi_text.lower(), twi_text)
+        phonetic = twi_to_phonetic(text)
         tts = gTTS(text=phonetic, lang='en', slow=True)
         tts.save(output_path)
         return output_path
     except Exception as e:
         print(f"Save error: {e}")
         return None
+
+
+def test_audio():
+    """Test audio with Twi phonetics"""
+    test_words = [
+        ("akwaaba",     "Welcome"),
+        ("medaase",     "Thank you"),
+        ("maakye",      "Good morning"),
+        ("me dɔ wo",    "I love you"),
+        ("ɔdɔ",         "Love"),
+        ("nsuo",        "Water"),
+        ("aduane",      "Food"),
+        ("gyina",       "Stand"),
+        ("mepawokyew",  "Please"),
+    ]
+    print("Testing Twi phonetic audio...\n")
+    for twi, english in test_words:
+        phonetic = twi_to_phonetic(twi)
+        print(f"  {english:15} | {twi:20} → [{phonetic}]")
+
+    print("\nPlaying: 'Akwaaba' (Welcome)...")
+    speak_twi("akwaaba")
+    print("Done! ✅")
+
+
+if __name__ == "__main__":
+    test_audio()

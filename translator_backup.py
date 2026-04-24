@@ -33,6 +33,41 @@ def twi_to_phonetic(text):
     return t
 
 
+from googletrans import Translator
+
+translator = Translator()
+
+# ══════════════════════════════════════════════════════════════
+# TWI PHONETIC CONVERTER
+# Based on official Twi (Akan) phonetics:
+# ɛ = "eh" (like air), ɔ = "aw" (like law)
+# ky = "ch", gy = "j", hw = "sh", tw = "ch"
+# ny = "ny", dw = "j", kw = "kw", hy = "hy"
+# ══════════════════════════════════════════════════════════════
+def twi_to_phonetic(text):
+    """Convert Twi text to English phonetics for gTTS pronunciation"""
+    t = text.lower()
+
+    # Step 1: Digraphs first (order matters — do these before single letters)
+    t = t.replace("ky", "ch")       # ky → ch (palatal)
+    t = t.replace("gy", "j")        # gy → soft j
+    t = t.replace("hw", "sh")       # hw → sh
+    t = t.replace("tw", "chwi")     # tw → ch sound
+    t = t.replace("dw", "j")        # dw → j sound
+    t = t.replace("ny", "ny")       # ny → ny (Spanish ñ)
+    t = t.replace("kw", "kw")       # kw → kw (queen)
+    t = t.replace("hy", "hy")       # hy → hy
+
+    # Step 2: Special Twi vowels
+    t = t.replace("ɛ", "eh")        # ɛ → eh (open e, like "air")
+    t = t.replace("ɔ", "aw")        # ɔ → aw (open o, like "law")
+
+    # Step 3: Regular vowels — guide pronunciation
+    # (leave as is, they're close enough for gTTS)
+
+    return t
+
+
 # ══════════════════════════════════════════════════════════════
 # EXPANDED TWI DICTIONARY — 200+ words
 # ══════════════════════════════════════════════════════════════
@@ -152,7 +187,6 @@ TWI_DICTIONARY = {
 
     # ── Emotions & Feelings ───────────────────────────────────
     "love":            "ɔdɔ",
-    "iloveyou":        "me dɔ wo",
     "i love you":      "me dɔ wo",
     "happy":           "anigye",
     "happiness":       "anigye",
@@ -319,6 +353,7 @@ TWI_DICTIONARY = {
     "week":            "nnawɔtwe",
     "month":           "bosome",
     "year":            "afe",
+    "today":           "ɛnnɛ",
 
     # ── Numbers ───────────────────────────────────────────────
     "one":             "baako",
@@ -461,77 +496,6 @@ TWI_DICTIONARY = {
     "tea":             "atɛ",
     "coffee":          "kofi",
     "juice":           "nsuo",
-
-    # ── Extra Greetings & Social ─────────────────────────────
-    "good afternoon everyone": "maaha mo nyinaa",
-    "good evening friends": "maadwo adamfo",
-    "long time no see": "ɛyɛ akyiri a yɛnhyia",
-    "nice to meet you": "me ho yɛ fɛ sɛ mahyia wo",
-    "see you tomorrow": "yɛbɛhyia ɔkyena",
-    "see you later": "yɛbɛhyia akyire",
-    "see you soon": "yɛbɛhyia ntɛm",
-
-    # ── Extra Courtesies ─────────────────────────────────────
-    "how are you doing": "wo ho te sɛn",
-    "i am sorry": "me pa wo kyɛw",
-    "you are welcome": "wo ho yɛ fɛ",
-    "please wait": "mepawokyew twen",
-    "please come": "mepawokyew bra",
-    "please sit": "mepawokyew tena ase",
-
-    # ── Family & People ──────────────────────────────────────
-    "my father": "me agya",
-    "my mother": "me maame",
-    "my friend": "me adamfo",
-    "my sister": "me nuabaa",
-    "my brother": "me nua barima",
-    "my son": "me babarima",
-    "my daughter": "me babaa",
-
-    # ── Daily Needs ──────────────────────────────────────────
-    "i am tired": "me brɛ",
-    "i need water": "mehia nsuo",
-    "i need food": "mehia aduane",
-    "i need money": "mehia sika",
-    "i am sleepy": "me ho yɛ daa",
-    "i am busy": "me wɔ adwuma",
-
-    # ── Emotions & Expressions ───────────────────────────────
-    "i am happy": "me ani agye",
-    "i am sad": "me werɛ aho",
-    "i am angry": "me abufuw",
-    "i am scared": "me suro",
-    "i love ghana": "me dɔ ghana",
-    "i miss you": "me werɛ aho wo",
-
-    # ── Places & Directions ──────────────────────────────────
-    "where is the market": "dwa no wɔ he",
-    "where is the hospital": "asramuro no wɔ he",
-    "go home": "kɔ fie",
-    "come here": "bra ha",
-    "go there": "kɔ hɔ",
-    "come back": "san bra",
-    "go to school": "kɔ sukuu",
-
-    # ── Time & Sentences ─────────────────────────────────────
-    "what time is it": "bere bɛn na ɛyɛ",
-    "today is friday": "ɛnnɛ yɛ Fida",
-    "tomorrow is saturday": "ɔkyena yɛ Memeneda",
-    "yesterday was thursday": "ɛnnɛ twam yɛ Wukuada",
-    "this week": "nnawɔtwe yi",
-    "next week": "nnawɔtwe a ɛreba",
-    "last week": "nnawɔtwe a atwam",
-
-    # ── Common Phrases ───────────────────────────────────────
-    "i understand": "mete aseɛ",
-    "i don't know": "minnim",
-    "i know": "minim",
-    "let's go": "yɛnkɔ",
-    "let's eat": "yɛn didi",
-    "let's pray": "yɛn bɔ mpae",
-    "let's dance": "yɛn sa",
-    "let's sing": "yɛn to dwom",
-    "let's play": "yɛn bɔ agoru",
 }
 
 
@@ -542,17 +506,80 @@ def get_twi_translation(text):
 
     # Single letter — return letter name (Twi alphabet only)
     if len(text) == 1 and text.upper().isalpha():
-        letter_names = {
-            "A":"Ah", "B":"Bi", "D":"Di", "E":"Ii",
-            "F":"Ef", "G":"Gi", "H":"He", "I":"me",
-            "K":"Kei", "L":"El", "M":"Em", "N":"En",
-            "O":"Oh", "P":"Pi", "R":"Ar", "S":"Es",
-            "T":"Ti", "U":"U", "W":"We", "Y":"Wai"
+        '''letter_names = {
+            'A':'Ah', 'B':'Bi', 'D':'Di', 'E':'Ii',
+            'F':'Ef', 'G':'Gi', 'H':'He', 'I':'me',
+            'K':'Kei', 'L':'El', 'M':'Em', 'N':'En',
+            'O':'Oh', 'P':'Pi', 'R':'Ar', 'S':'Es',
+            'T':'Ti', 'U':'U', 'W':'We', 'Y':'Wai'
         }
         return text, letter_names.get(text.upper(), text)
-
+'''
     clean  = text.lower().strip().replace(" ", "")
     spaced = text.lower().strip()
+
+
+
+    # Check dictionary (no spaces first, then with spaces)
+    if clean in TWI_DICTIONARY:
+        return text, TWI_DICTIONARY[clean]
+    if spaced in TWI_DICTIONARY:
+        return text, TWI_DICTIONARY[spaced]
+
+    # Google Translate fallback
+    try:
+        result = translator.translate(text, src='en', dest='ak')
+        if result and result.text and result.text.lower() != text.lower():
+            return text, result.text
+    except Exception as e:
+        print(f"Translation error: {e}")
+
+    return text, text
+
+
+def get_twi_for_word(word):
+    """Translate a complete word to Twi"""
+    return get_twi_translation(word)
+
+
+def get_twi_for_sign(sign_label):
+    """Get Twi for a single sign label"""
+    mapping = {'del': 'delete', 'nothing': '', 'space': 'space'}
+    english = mapping.get(sign_label, sign_label)
+    return get_twi_translation(english)
+
+
+if __name__ == "__main__":
+    tests = ["hello", "food", "water", "love", "ghana",
+             "good morning", "i love you", "thank you",
+             "medaase", "akwaaba"]
+    for word in tests:
+        eng, twi = get_twi_for_word(word)
+        phonetic = twi_to_phonetic(twi)
+        print(f"{eng:20} → {twi:20} → [{phonetic}]")
+
+
+
+def get_twi_translation(text):
+    """Get Twi translation for any text"""
+    if not text:
+        return text, ""
+
+    # Single letter — return letter name (Twi alphabet only)
+    if len(text) == 1 and text.upper().isalpha():
+        '''letter_names = {
+            'A':'Ah', 'B':'Bi', 'D':'Di', 'E':'Ii',
+            'F':'Ef', 'G':'Gi', 'H':'He', 'I':'me',
+            'K':'Kei', 'L':'El', 'M':'Em', 'N':'En',
+            'O':'Oh', 'P':'Pi', 'R':'Ar', 'S':'Es',
+            'T':'Ti', 'U':'U', 'W':'We', 'Y':'Wai'
+        }
+        return text, letter_names.get(text.upper(), text)
+'''
+    clean  = text.lower().strip().replace(" ", "")
+    spaced = text.lower().strip()
+
+
 
     # Check dictionary (no spaces first, then with spaces)
     if clean in TWI_DICTIONARY:
