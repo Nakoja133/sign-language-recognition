@@ -358,7 +358,7 @@ TWI_DICTIONARY = {
     "pink":            "pinki",
 
     # ── Body Parts ────────────────────────────────────────────
-    "head":            "ti",
+    "head":            "ɛti",
     "eye":             "ani",
     "ear":             "aso",
     "nose":            "hwene",
@@ -368,7 +368,7 @@ TWI_DICTIONARY = {
     "leg":             "nan",
     "heart":           "koma",
     "body":            "honam",
-    "hair":            "owu",
+    "hair":            "ɛnwin",
     "face":            "anim",
     "back":            "akyi",
     "stomach":         "yafunu",
@@ -402,9 +402,9 @@ TWI_DICTIONARY = {
     "idontunderstand": "mente aseɛ",
     "pleasespeakslowly": "mepawokyew kasa brɛ brɛ",
     "please speak slowly": "mepawokyew kasa brɛ brɛ",
-    "whereisthebathroom": "adwenguare no wɔ hɔ",
-    "ineedhelp":       "mhia mmoa",
-    "i need help":     "mhia mmoa",
+    "whereisthebathroom": "ɛdwaɛ no wɔhen",
+    "ineedhelp":       "me hia mmoa",
+    "i need help":     "me hia mmoa",
     "callpolice":      "frɛ polisi",
     "call police":     "frɛ polisi",
     "iamhungry":       "kɔm de me",
@@ -429,10 +429,10 @@ TWI_DICTIONARY = {
     "student":         "osuani",
     "book":            "nhoma",
     "pen":             "ɛpɛn",
-    "pencil":          "pensɛl",
+    "pencil":          "pensere",
     "paper":           "krataa",
     "class":           "klass",
-    "exam":            "nhwɛsoɔ",
+    "exam":            "nsɔhwɛ",
     "work":            "adwuma",
     "job":             "adwuma",
     "office":          "ofesi",
@@ -452,7 +452,7 @@ TWI_DICTIONARY = {
     "banku":           "banku",
     "kenkey":          "kɛnkɛ",
     "plantain":        "ɔpɛtɛ",
-    "yam":             "ɛde",
+    "yam":             "bayerɛ",
     "pepper":          "mako",
     "salt":            "nkyene",
     "oil":             "ngo",
@@ -489,7 +489,7 @@ TWI_DICTIONARY = {
     "my daughter": "me babaa",
 
     # ── Daily Needs ──────────────────────────────────────────
-    "i am tired": "me brɛ",
+    "i am tired": "ma brɛ",
     "i need water": "mehia nsuo",
     "i need food": "mehia aduane",
     "i need money": "mehia sika",
@@ -542,14 +542,14 @@ def get_twi_translation(text):
 
     # Single letter — return letter name (Twi alphabet only)
     if len(text) == 1 and text.upper().isalpha():
-        letter_names = {
+        '''letter_names = {
             "A":"Ah", "B":"Bi", "D":"Di", "E":"Ii",
             "F":"Ef", "G":"Gi", "H":"He", "I":"me",
             "K":"Kei", "L":"El", "M":"Em", "N":"En",
             "O":"Oh", "P":"Pi", "R":"Ar", "S":"Es",
             "T":"Ti", "U":"U", "W":"We", "Y":"Wai"
         }
-        return text, letter_names.get(text.upper(), text)
+        return text, letter_names.get(text.upper(), text)'''
 
     clean  = text.lower().strip().replace(" ", "")
     spaced = text.lower().strip()
